@@ -1,3 +1,7 @@
+// Copyright (c) 2024 TrioSystems
+// Use of this source code is governed by a Zero-Clause BSD license that can
+// be found in the examples/EXAMPLES_LICENSE file.
+
 import gpio
 import i2c
 import cst816s as cst816s

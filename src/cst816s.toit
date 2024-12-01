@@ -1,24 +1,7 @@
 // MIT License
-
 // Copyright (c) 2024 TrioSystems
-
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
+// Use of this source code is governed by an MIT-style license that can be
+// found in the package's LICENSE file.
 
 
 import i2c
@@ -276,9 +259,9 @@ class Driver:
       irq-pin_.wait-for 0
 
       data_raw/ByteArray := dev_.read-reg 0x01 6
-      coord_.gestureID = data-raw.byte-at 0     //data_raw[0]  
-      coord_.points = data-raw.byte-at 1        //data_raw[1]
-      coord_.event = (data-raw.byte-at 2) >> 6  //data_raw[2] >> 6
+      coord_.gestureID = data-raw.byte-at 0     
+      coord_.points = data-raw.byte-at 1        
+      coord_.event = (data-raw.byte-at 2) >> 6                //data_raw[2] >> 6
       coord_.x = (io.BIG-ENDIAN.uint16 data-raw 2) & 0x0FFF   //((data_raw[2] & 0xF) << 8) + data_raw[3]
       coord_.y = (io.BIG-ENDIAN.uint16 data-raw 4) & 0x0FFF   //((data_raw[4] & 0xF) << 8) + data_raw[5]
       
@@ -300,12 +283,7 @@ class Driver:
         else if coord_.gestureID  == 12:
           if longPressAction_ : longPressAction_.call
 
-      //logger_.debug "$label_: gestureID $coord_.gestureID"
-      //logger_.debug "$label_: event $coord_.event"
-      //logger_.debug "$label_: finger $coord_.points"
-      //logger_.debug "$label_: x Coordinate $coord_.x"
-      //logger_.debug "$label_: y Coordinate $coord_.y"
-      
+
 
 
 /*
