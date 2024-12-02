@@ -27,10 +27,10 @@ Gesture ID
 
 class Coordinate:
   gestureID/int? := null  // Gesture ID
-  points/int? := null  // Number of touch points
-  event/int? := null // Event (0 = Down, 1 = Up, 2 = Contact)
-  x /int := 0 // x: X axis coordinate.
-  y /int := 0 // y: Y axis coordinate.
+  points/int? := null     // Number of touch points
+  event/int? := null      // Event (0 = Down, 1 = Up, 2 = Contact)
+  x /int := 0             // X axis coordinate.
+  y /int := 0             // Y axis coordinate.
 
   constructor .x .y :
 
@@ -89,7 +89,7 @@ class Driver:
 
     
   /**
-  Re-Assigns actions to button events. Optionally all previously registered action are cleared.
+  Assigns actions to interrupt events. Optionally all previously registered action are cleared.
   */
   assign-action 
       --clear-all /bool = false
