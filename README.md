@@ -4,7 +4,7 @@ Library for the CST816S capacitive touch screen IC
 
 ## Auto Sleep Control
 
-Auto Sleep is referred to as Standby Mode in the document. Disabling of auto sleep or auto standby will keep the touch display in Dynamic mode. This will improve responsiveness, at the cost of about ~1.6mA. /
+Auto Sleep is referred to as Standby Mode in the document. Disabling of auto sleep or auto standby will keep the touch display in Dynamic mode. This will improve responsiveness, at the cost of about ~1.6mA. <br />
 
 By default, auto sleep is enabled with a timeout of 2 seconds. The following functions allow you to manage auto sleep behavior with "seconds" as Time in seconds (1-255):
 
@@ -15,9 +15,9 @@ touch.set_auto_sleep_time seconds
 
 ## User-Provided Interrupt
 
-The CST816S library allows you to attach custom interrupt functions to handle touch events according to your application's needs. /
+The CST816S library allows you to attach custom interrupt functions to handle touch events according to your application's needs. <br />
 By providing a user-defined interrupt functions you can trigger specific actions upon gestures, such as 
-swipe-up, swipe-down, swipe-left, swipe-right, single-click, double-click and long-press, or at any irq pulse without constantly polling the device. /
+swipe-up, swipe-down, swipe-left, swipe-right, single-click, double-click and long-press, or at any irq pulse without constantly polling the device. <br />
 Optionally all previously registered actions are cleared with --clear-all=true 
 
 
@@ -38,12 +38,13 @@ touch.assign-action --clear-all=true
 ```
 
 ##  Interrupt Control
-The following functions allow you to manage the irq behavior with : /
---motion = generates irq pulses when gesture is detected. /
---touch = generates irq pulses when touch is detected. /
---change = generates irq pulses when touch is changed. /
---longpress = only generates one irq pulse when log press gesture. /
---test = generates automatically periodic irq pulses for testing purpose. /
+The following functions allow you to manage the irq behavior with : <br />
+--motion = generates irq pulses when gesture is detected. <br />
+--touch = generates irq pulses when touch is detected. <br />
+--change = generates irq pulses when touch is changed. <br />
+--longpress = only generates one irq pulse when log press gesture. <br />
+--test = generates automatically periodic irq pulses for testing purpose.
+
 By default : touch and change is on:
 
 ``` toit
