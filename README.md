@@ -97,3 +97,4 @@ See the `examples` folder for more examples.
 ## Register Information
 
 all registers are described in details in CST816S_register_declaration.pdf
+
