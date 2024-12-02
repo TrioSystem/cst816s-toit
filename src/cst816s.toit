@@ -1,5 +1,5 @@
 // MIT License
-// Copyright (c) 2024 TrioSystems
+// Copyright (c) 2024 TrioSystem
 // Use of this source code is governed by an MIT-style license that can be
 // found in the package's LICENSE file.
 

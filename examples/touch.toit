@@ -1,4 +1,4 @@
-// Copyright (c) 2024 TrioSystems
+// Copyright (c) 2024 TrioSystem
 // Use of this source code is governed by a Zero-Clause BSD license that can
 // be found in the examples/EXAMPLES_LICENSE file.
 
