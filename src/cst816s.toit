@@ -3,7 +3,6 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the package's LICENSE file.
 
-
 import i2c
 import gpio
 import math
@@ -23,7 +22,6 @@ Gesture ID
   DOUBLE_CLICK = 0x0B,
   LONG_PRESS = 0x0C
  */   
-
 
 class Coordinate:
   gestureID/int? := null  // Gesture ID
@@ -159,9 +157,6 @@ class Driver:
     return coord_
 
 
-
-
-
   /*!
     @brief  put the touch screen in standby mode
   
@@ -191,7 +186,6 @@ class Driver:
     motionmask := dev_.read-reg MotionMask 1
     logger_.debug "$label_: MotionMask is set to $motionmask"
    
-
 
     /*!
     @brief  interrupt contol register 0xFA
@@ -301,7 +295,6 @@ class IrqActions:
   static LONG_PRESS ::= 7
 
   static SIZE_ACTIONS ::= 8
-
 
   constructor
       --clear-all /bool = false
