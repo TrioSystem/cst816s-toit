@@ -156,8 +156,7 @@ class Driver:
     return x
 */
   get_coords -> Coordinate:
-    coordinate:= Coordinate coord_.x coord_.y
-    return coordinate
+    return coord_
 
 
 
@@ -289,39 +288,46 @@ class Driver:
 /*
 ==> TODO
 
-class ButtonHandlerActions:
+class IrqActions:
   actions_ /List? := null
 
-  static PRESS ::= 0
-  static RELEASE ::= 1
-  static LONG ::= 2
-  static SINGLE_CLICK ::= 3
-  static DOUBLE_CLICK ::= 4
-  static LONG_CLICK ::= 5
+  static IRQ ::= 0
+  static SWIPE-UP ::= 1
+  static SWIPE-Down ::= 2
+  static SWIPE-RIGHT ::= 3
+  static SWIPE-LEFT ::= 4
+  static SINGLE_CLICK ::= 5
+  static DOUBLE_CLICK ::= 6
+  static LONG_PRESS ::= 7
 
-  static SIZE_ACTIONS ::= 6
+  static SIZE_ACTIONS ::= 8
 
 
   constructor
-      --pressAction /Lambda? = null
-      --releaseAction /Lambda? = null
-      --longPressAction /Lambda? = null
-      --singleClickAction  /Lambda? = null
-      --doubleClickAction  /Lambda? = null
-      --trippleClickAction  /Lambda? = null
+      --clear-all /bool = false
+      --irq /Lambda? = null
+      --single-click /Lambda? = null
+      --double-click /Lambda? = null
+      --long-press /Lambda? = null
+      --swipe-up /Lambda? = null
+      --swipe-down /Lambda? = null
+      --swipe-right /Lambda? = null
+      --swipe-left /Lambda? = null
       :
       actions_ = List SIZE_ACTIONS null
       print "actions constructed"
-      actions_[PRESS] = pressAction
-      actions_[RELEASE] = releaseAction
-      actions_[LONG] = longPressAction
-      actions_[SINGLE_CLICK] = singleClickAction
-      actions_[DOUBLE_CLICK] = doubleClickAction
-      actions_[TRIPPLE_CLICK] = trippleClickAction
+      actions_[IRQ] = irq
+      actions_[SWIPE-UP] = swipe-up
+      actions_[SWIPE-Down] = swipe-down
+      actions_[SWIPE-RIGHT] = swipe-right
+      actions_[SWIPE-LEFT] = swipe-left
+      actions_[SINGLE-CLICK] = single-click
+      actions_[DOUBLE_CLICK] = double-click
+      actions_[LONG-PRESS] = long-press
       debug
 
 
-  constructor actions /ButtonHandlerActions
+  constructor actions/IrqActions
     :
     null
     print "copy constructor"
@@ -329,14 +335,14 @@ class ButtonHandlerActions:
 
 
   debug:
-    print "ButtonHandlerActions debug: $(actions_)"
+    print "IrqActions debug: $(actions_)"
     actions_.do:
       if it != null:
         print "$(it)"
 
+
+
+assign-actions actions /IrqActions:
 */
-
-//assignActions actions /ButtonHandlerActions:
-
   
 
