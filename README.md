@@ -1,6 +1,11 @@
-# cst816s
+# cst816s-toit
 
 Library for the CST816S capacitive touch screen IC
+
+## Install
+```
+jag pkg install cst816s-toit
+```
 
 ## Auto Sleep Control
 

@@ -5,5 +5,7 @@
 
 # If no description is given, the first paragraph of the README.md is used.
 # description: PACKAGE_DESCRIPTION
-name: cst816s
+name: cst816s-toit
 description: Library for the CST816S capacitive touch screen IC
+environment:
+  sdk: ^2.0.0-alpha.170
