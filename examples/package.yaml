@@ -1,4 +1,4 @@
-name: cst816s-toit
+name: cst816s
 description: Library for the CST816S capacitive touch screen IC
 environment:
   sdk: ^2.0.0-alpha.170

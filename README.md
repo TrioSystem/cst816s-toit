@@ -1,4 +1,4 @@
-# cst816s-toit
+# cst816s
 
 Library for the CST816S capacitive touch screen IC
 

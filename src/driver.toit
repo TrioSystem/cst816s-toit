@@ -7,7 +7,7 @@ import i2c
 import gpio
 import math
 import io
-import log
+
 
 I2C_ADDRESS ::=  0x15
 
@@ -59,19 +59,12 @@ class Driver:
 
   coord_/Coordinate ::= ?
 
-  logger_ /log.Logger
-  label_ /string
 
   constructor  
       .dev_
       rst-pin/int
       irq-pin/int
-      --logger/log.Logger = (log.default.with_name "cst816s")
-      --label/string = ""
       :
-
-    logger_ = logger
-    label_ = label
 
     rst-pin_ = gpio.Pin.out rst-pin 
     irq-pin_ = gpio.Pin.in irq-pin 
@@ -80,8 +73,8 @@ class Driver:
 
     reset_
 
-    versionInfo := dev_.read-reg 0xA7 3
-    logger_.debug "$label_: Version Info $versionInfo"
+    //versionInfo := dev_.read-reg 0xA7 3
+    //print "Version Info $versionInfo"
 
     task:: irq-task
 
@@ -101,12 +94,9 @@ class Driver:
       --swipe-left /Lambda? = null
     :
 
-    logger_.debug "$label_: assignAction"
     if clear-all:
       irqAction_ = swipeDownAction_ = swipeUpAction_ = longPressAction_ = swipeRightAction_ = \
       swipeLeftAction_ = singleClickAction_ = doubleClickAction_ = null
-  
-      logger_.debug "$label_: all actions cleared"
 
     if irq != null:
         irqAction_ = irq
@@ -183,8 +173,8 @@ class Driver:
     else :
       dev_.write-reg MotionMask #[0x00] 
 
-    motionmask := dev_.read-reg MotionMask 1
-    logger_.debug "$label_: MotionMask is set to $motionmask"
+    //motionmask := dev_.read-reg MotionMask 1
+    //print " MotionMask is set to $motionmask"
    
 
     /*!
@@ -221,8 +211,8 @@ class Driver:
     dev_.registers.write-u8 IrqCtl param
    
 
-    interrupt := dev_.read-reg IrqCtl 1
-    logger_.debug "$label_: InterruptMask is set to $interrupt"
+    //interrupt := dev_.read-reg IrqCtl 1
+    //print "InterruptMask is set to $interrupt"
   
 
 /*!
@@ -240,13 +230,13 @@ class Driver:
       seconds = 255 // Enforce maximum value of 255 seconds  
 
     dev_.registers.write-u8 0xF9 seconds
-    data := dev_.read-reg 0xF9 1
-    logger_.debug "$label_: Auto Sleep Time is set to $data seconds"
+
+    //data := dev_.read-reg 0xF9 1
+    //print " Auto Sleep Time is set to $data seconds"
     
 
 
   irq-task:
-    logger_.debug "$label_: irq task start"
     
     while true:
       irq-pin_.wait-for 0
