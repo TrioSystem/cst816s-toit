@@ -4,7 +4,7 @@
 
 import gpio
 import i2c
-import cst816s as cst816s
+import cst816s-toit as cst816s
 
 //ESP32-2424S012 pin configuration
 SDA_PIN ::= 4
