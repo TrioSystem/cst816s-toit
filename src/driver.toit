@@ -5,7 +5,6 @@
 
 import i2c
 import gpio
-import math
 import io
 
 
@@ -29,6 +28,7 @@ class Coordinate:
   event/int? := null      // Event (0 = Down, 1 = Up, 2 = Contact)
   x /int := 0             // X axis coordinate.
   y /int := 0             // Y axis coordinate.
+  
 
   constructor .x .y :
 
@@ -43,21 +43,11 @@ class Driver:
   static AutoSleeptime   ::= 0xF9
   static LongPressTime ::= 0xFC
 
-  irqAction_ /Lambda? := null
-  singleClickAction_ /Lambda? := null
-  doubleClickAction_ /Lambda? := null
-  longPressAction_ /Lambda? := null
-  swipeUpAction_ /Lambda? := null
-  swipeDownAction_ /Lambda? := null
-  swipeRightAction_ /Lambda? := null
-  swipeLeftAction_ /Lambda? := null
-
   dev_/i2c.Device ::= ?
-
   rst-pin_/gpio.Pin ::= ?
   irq-pin_/gpio.Pin ::= ?
-
   coord_/Coordinate ::= ?
+  actions_/Map := { : }
 
 
   constructor  
@@ -93,36 +83,29 @@ class Driver:
       --swipe-right /Lambda? = null
       --swipe-left /Lambda? = null
     :
+    if clear-all: 
+      a/Map := { : }
+      actions_ = a
+    action/Map := {
+      0 :  irq,
+      1 :  swipe-up,  
+      2 :  swipe-down,  
+      3 :  swipe-right,  
+      4 :  swipe-left,
+      5 :  single-click, 
+      11 :  double-click, 
+      12 :  long-press,       
+      } 
+         
 
-    if clear-all:
-      irqAction_ = swipeDownAction_ = swipeUpAction_ = longPressAction_ = swipeRightAction_ = \
-      swipeLeftAction_ = singleClickAction_ = doubleClickAction_ = null
+    action.do: | key value |
 
-    if irq != null:
-        irqAction_ = irq
+      if value:
+        actions_.update key 
+          --if-absent=: value
+          : value
 
-    if long-press != null:
-      longPressAction_ = long-press
-
-    if single-click != null:
-      singleClickAction_ = single-click
-
-    if double-click != null:
-      doubleClickAction_ = double-click
-
-    if swipe-up != null:
-      swipeUpAction_ = swipe-up
-
-    if swipe-down != null:
-      swipeDownAction_ = swipe-down
-
-    if swipe-right != null:
-      swipeRightAction_ = swipe-right
-        
-    if swipe-left != null:
-      swipeLeftAction_ = swipe-left
-
-
+      
 
   /**
   resets the chip.
@@ -234,6 +217,7 @@ class Driver:
     //data := dev_.read-reg 0xF9 1
     //print " Auto Sleep Time is set to $data seconds"
     
+  
 
 
   irq-task:
@@ -247,85 +231,7 @@ class Driver:
       coord_.event = (data-raw.byte-at 2) >> 6                //data_raw[2] >> 6
       coord_.x = (io.BIG-ENDIAN.uint16 data-raw 2) & 0x0FFF   //((data_raw[2] & 0xF) << 8) + data_raw[3]
       coord_.y = (io.BIG-ENDIAN.uint16 data-raw 4) & 0x0FFF   //((data_raw[4] & 0xF) << 8) + data_raw[5]
+
+      actions_.get coord_.gestureID
+        --if-present=: if actions_[coord_.gestureID] : actions_[coord_.gestureID].call
       
-      if irqAction_: irqAction_.call
-      if coord_.gestureID > 0:
- 
-        if coord_.gestureID == 1:
-          if swipeUpAction_: swipeUpAction_.call
-        else if coord_.gestureID  == 2:
-          if swipeDownAction_: swipeDownAction_.call
-        else if coord_.gestureID  == 3:
-          if swipeLeftAction_: swipeLeftAction_.call
-        else if coord_.gestureID  == 4:
-          if swipeRightAction_: swipeRightAction_.call
-        else if coord_.gestureID  == 5:
-          if singleClickAction_: singleClickAction_.call
-        else if coord_.gestureID  == 11:
-          if doubleClickAction_: doubleClickAction_.call
-        else if coord_.gestureID  == 12:
-          if longPressAction_ : longPressAction_.call
-
-
-
-
-/*
-==> TODO
-
-class IrqActions:
-  actions_ /List? := null
-
-  static IRQ ::= 0
-  static SWIPE-UP ::= 1
-  static SWIPE-Down ::= 2
-  static SWIPE-RIGHT ::= 3
-  static SWIPE-LEFT ::= 4
-  static SINGLE_CLICK ::= 5
-  static DOUBLE_CLICK ::= 6
-  static LONG_PRESS ::= 7
-
-  static SIZE_ACTIONS ::= 8
-
-  constructor
-      --clear-all /bool = false
-      --irq /Lambda? = null
-      --single-click /Lambda? = null
-      --double-click /Lambda? = null
-      --long-press /Lambda? = null
-      --swipe-up /Lambda? = null
-      --swipe-down /Lambda? = null
-      --swipe-right /Lambda? = null
-      --swipe-left /Lambda? = null
-      :
-      actions_ = List SIZE_ACTIONS null
-      print "actions constructed"
-      actions_[IRQ] = irq
-      actions_[SWIPE-UP] = swipe-up
-      actions_[SWIPE-Down] = swipe-down
-      actions_[SWIPE-RIGHT] = swipe-right
-      actions_[SWIPE-LEFT] = swipe-left
-      actions_[SINGLE-CLICK] = single-click
-      actions_[DOUBLE_CLICK] = double-click
-      actions_[LONG-PRESS] = long-press
-      debug
-
-
-  constructor actions/IrqActions
-    :
-    null
-    print "copy constructor"
-    debug
-
-
-  debug:
-    print "IrqActions debug: $(actions_)"
-    actions_.do:
-      if it != null:
-        print "$(it)"
-
-
-
-assign-actions actions /IrqActions:
-*/
-  
-
